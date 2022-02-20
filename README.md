@@ -8,6 +8,7 @@ In Thai only
 
 * [บทความ 0 บทเริ่ม](./Battle%20Docs/00.md)
 * [บทความ 1 เริ่มเขียนเกม](./Battle%20Docs/01.md)
+* [บทความ 2 สร้างรถถัง](./Battle%20Docs/02.md)
 
 ## Last
 
