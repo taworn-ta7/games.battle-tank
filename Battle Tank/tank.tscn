@@ -1,6 +1,7 @@
-[gd_scene load_steps=403 format=2]
+[gd_scene load_steps=404 format=2]
 
 [ext_resource path="res://images/all.png" type="Texture" id=1]
+[ext_resource path="res://tank.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
@@ -2010,9 +2011,12 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Tank" type="Node2D"]
+[node name="Tank" type="Area2D"]
+script = ExtResource( 2 )
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = SubResource( 401 )
 centered = false
+
+[connection signal="frame_changed" from="Sprite" to="." method="_on_Sprite_frame_changed"]
