@@ -1,9 +1,12 @@
 extends Area2D
 
+var base_image = 0
+var sprite_left = [base_image + 2, base_image + 4]
+var sprite_right = [base_image + 6, base_image + 8]
+var sprite_up = [base_image + 0, base_image + 2]
+var sprite_down = [base_image + 4, base_image + 6]
+var sprite = sprite_up
 var velocity = Vector2(0, 0)
-var base = 0
-var begin = 0
-var end = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,31 +18,47 @@ func _process(delta):
 	if Input.is_action_pressed("ui_left"):
 		velocity.x = -1
 		velocity.y = 0
-		begin = base + 2
-		end = base + 4
+		sprite = sprite_left
 	elif Input.is_action_pressed("ui_right"):
 		velocity.x = 1
 		velocity.y = 0
-		begin = base + 6
-		end = base + 8
+		sprite = sprite_right
 	elif Input.is_action_pressed("ui_up"):
 		velocity.x = 0
 		velocity.y = -1
-		begin = base + 0
-		end = base + 2
+		sprite = sprite_up
 	elif Input.is_action_pressed("ui_down"):
 		velocity.x = 0
 		velocity.y = 1
-		begin = base + 4
-		end = base + 6
+		sprite = sprite_down
+	else:
+		velocity.x = 0
+		velocity.y = 0
+
+	# check boundary
+	if velocity.x <= 0 && position.x <= 0:
+		velocity.x = 0
+		position.x = 0
+	if velocity.x >= 0 && position.x >= 1024 - 64:
+		velocity.x = 0
+		position.x = 1024 - 64
+	if velocity.y <= 0 && position.y <= 0:
+		velocity.y = 0
+		position.y = 0
+	if velocity.y >= 0 && position.y >= 600 - 64:
+		velocity.y = 0
+		position.y = 600 - 64
 
 	# If has input, move.
 	if velocity.length() > 0:
 		if !$Sprite.playing:
-			$Sprite.frame = begin
+			$Sprite.frame = sprite[0]
 			$Sprite.playing = true
 		translate(velocity)
+	else:
+		$Sprite.playing = false
 
 func _on_Sprite_frame_changed():
-	if $Sprite.frame >= end:
-		$Sprite.frame = begin
+	if $Sprite.frame >= sprite[-1]:
+		$Sprite.frame = sprite[0]
+
