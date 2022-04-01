@@ -34,6 +34,8 @@ func _process(delta):
 	else:
 		velocity.x = 0
 		velocity.y = 0
+		$Sprite.playing = false
+		return
 
 	# check boundary
 	if velocity.x <= 0 && position.x <= 0:
@@ -50,13 +52,12 @@ func _process(delta):
 		position.y = 600 - 64
 
 	# If has input, move.
-	if velocity.length() > 0:
-		if !$Sprite.playing:
-			$Sprite.frame = sprite[0]
-			$Sprite.playing = true
-		translate(velocity)
-	else:
-		$Sprite.playing = false
+	if $Sprite.frame < sprite[0] || $Sprite.frame >= sprite[-1]:
+		$Sprite.frame = sprite[0]
+	if !$Sprite.playing:
+		$Sprite.frame = sprite[0]
+		$Sprite.playing = true
+	translate(velocity)
 
 func _on_Sprite_frame_changed():
 	if $Sprite.frame >= sprite[-1]:
