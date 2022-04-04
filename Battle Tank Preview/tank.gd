@@ -20,6 +20,13 @@ func _ready():
 
 # เรียกเรื่อยๆ ทุกเวลา delta ผ่านไป
 func _process(delta):
+	# กด Space ยิง
+	if Input.is_action_pressed("ui_accept"):
+		print("shoot!")
+		var bullet = preload("res://bullet.tscn").instance()
+		get_parent().add_child(bullet)
+		pass
+		
 	# Check input 4 directions.
 	if Input.is_action_pressed("ui_left"):
 		velocity.x = -1
