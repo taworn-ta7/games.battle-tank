@@ -11,8 +11,12 @@ config_version=4
 [application]
 
 config/name="Battle Tank"
-run/main_scene="res://start.tscn"
+run/main_scene="res://tank.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Constants="*res://constants.gd"
 
 [physics]
 
