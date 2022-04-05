@@ -1,9 +1,13 @@
 extends Node2D
 
+# ทิศทาง
 var direction = Constants.DIRECTION_UP
+
+# ความเร็ว
 var speed = 4
 var velocity = Vector2(0, 0)
 
+# กำหนดค่าเริ่มต้น
 func init(dir, pos):
 	direction = dir
 	position = pos
@@ -18,7 +22,7 @@ func init(dir, pos):
 
 # เรียกเรื่อยๆ ทุกเวลา delta ผ่านไป
 func _process(delta):
-	# check boundary
+	# เช็คขอบ
 	var area = get_area()
 	if velocity.x <= 0 && area.position.x <= Constants.AREA_LEFT:
 		destroy()

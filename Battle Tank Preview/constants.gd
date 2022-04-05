@@ -1,12 +1,12 @@
 extends Node
 
-# กรอบฉากต่อสู้
+# ขนาดฉากต่อสู้
 const AREA_LEFT = 0
 const AREA_RIGHT = 600
 const AREA_UP = 0
 const AREA_DOWN = 400
 
-# ขนาดบล๊อก (Block)
+# ขนาดบล๊อก
 const BLOCK_WIDTH = 64
 const BLOCK_HEIGHT = 64
 

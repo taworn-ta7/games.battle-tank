@@ -7,24 +7,38 @@ var sprite_right = [base_image + 6, base_image + 8]
 var sprite_up = [base_image + 0, base_image + 2]
 var sprite_down = [base_image + 4, base_image + 6]
 var sprite = sprite_up
+
+# เคลื่อนไหว
 var move = false
+
+# ทิศทาง
 var direction = Constants.DIRECTION_UP
 
 # ความเร็ว
+var speed = 2
 var velocity = Vector2(0, 0)
-var speed = 4
+
+# อัตราการยิง, หน่วยเป็นวินาที
+var rate_of_fire = 1
+var rof = 0
 
 # เรียกเมื่อ สร้าง Scene
 func _ready():
-	pass # Replace with function body.
+	pass
 
 # เรียกเรื่อยๆ ทุกเวลา delta ผ่านไป
 func _process(delta):
+	# ลดเวลาการยิง, ถ้าเพิ่งยิงออกไป
+	if rof > 0:
+		rof -= delta
+	
 	# กด Space ยิง
 	if Input.is_action_pressed("ui_accept"):
-		shoot()
+		if rof <= 0:
+			rof = rate_of_fire
+			shoot()
 		
-	# Check input 4 directions.
+	# กดปุ่มทิศทาง
 	if Input.is_action_pressed("ui_left"):
 		velocity.x = -1
 		velocity.y = 0
@@ -56,7 +70,7 @@ func _process(delta):
 		$Sprite.playing = false
 		return
 
-	# check boundary
+	# เช็คขอบ
 	var area = get_area()
 	if velocity.x <= 0 && area.position.x <= Constants.AREA_LEFT:
 		velocity.x = 0
@@ -71,24 +85,25 @@ func _process(delta):
 		velocity.y = 0
 		position.y = Constants.AREA_DOWN - Constants.TANK_HEIGHT_HALF
 
-	# If has input, move.
-	if $Sprite.frame < sprite[0] || $Sprite.frame >= sprite[-1]:
-		$Sprite.frame = sprite[0]
-	if !$Sprite.playing:
-		$Sprite.frame = sprite[0]
-		$Sprite.playing = true
-	translate(velocity * speed)
+	# ถ้ามีการเคลื่อนไหว
+	if move:
+		if $Sprite.frame < sprite[0] || $Sprite.frame >= sprite[-1]:
+			$Sprite.frame = sprite[0]
+		if !$Sprite.playing:
+			$Sprite.frame = sprite[0]
+			$Sprite.playing = true
+		translate(velocity * speed)
 
 # เรียกเมื่อ animation frame เปลี่ยน
 func _on_Sprite_frame_changed():
 	if $Sprite.frame >= sprite[-1]:
 		$Sprite.frame = sprite[0]
 
-# shoot
+# ยิง
 func shoot():
 	var bullet = preload("res://bullet.tscn").instance()
 	get_parent().add_child(bullet)
-	
+
 	if direction == Constants.DIRECTION_LEFT:
 		bullet.init(direction, Vector2(position.x - Constants.TANK_WIDTH_HALF, position.y))
 	elif direction == Constants.DIRECTION_RIGHT:
