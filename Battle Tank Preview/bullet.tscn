@@ -7,6 +7,5 @@
 [node name="Area" type="Area2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 100, 100 )
-scale = Vector2( 4, 4 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )

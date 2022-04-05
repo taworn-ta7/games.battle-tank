@@ -2017,6 +2017,5 @@ script = ExtResource( 2 )
 [node name="Sprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 4, 4 )
 frames = SubResource( 401 )
-centered = false
 
 [connection signal="frame_changed" from="Sprite" to="." method="_on_Sprite_frame_changed"]

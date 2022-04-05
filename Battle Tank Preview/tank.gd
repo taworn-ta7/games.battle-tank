@@ -60,18 +60,19 @@ func _process(delta):
 		return
 
 	# check boundary
-	if velocity.x <= 0 && position.x <= Constants.AREA_LEFT:
+	var area = get_area()
+	if velocity.x <= 0 && area.position.x <= Constants.AREA_LEFT:
 		velocity.x = 0
-		position.x = 0
-	if velocity.x >= 0 && position.x >= Constants.AREA_RIGHT - Constants.TANK_WIDTH:
+		position.x = Constants.AREA_LEFT + Constants.TANK_WIDTH_HALF
+	if velocity.x >= 0 && area.end.x >= Constants.AREA_RIGHT:
 		velocity.x = 0
-		position.x = Constants.AREA_RIGHT - Constants.TANK_WIDTH
-	if velocity.y <= 0 && position.y <= Constants.AREA_UP:
+		position.x = Constants.AREA_RIGHT - Constants.TANK_WIDTH_HALF
+	if velocity.y <= 0 && area.position.y <= Constants.AREA_UP:
 		velocity.y = 0
-		position.y = 0
-	if velocity.y >= 0 && position.y >= Constants.AREA_DOWN - Constants.TANK_HEIGHT:
+		position.y = Constants.AREA_UP + Constants.TANK_HEIGHT_HALF
+	if velocity.y >= 0 && area.end.y >= Constants.AREA_DOWN:
 		velocity.y = 0
-		position.y = Constants.AREA_DOWN - Constants.TANK_HEIGHT
+		position.y = Constants.AREA_DOWN - Constants.TANK_HEIGHT_HALF
 
 	# If has input, move.
 	if $Sprite.frame < sprite[0] || $Sprite.frame >= sprite[-1]:
@@ -85,4 +86,11 @@ func _process(delta):
 func _on_Sprite_frame_changed():
 	if $Sprite.frame >= sprite[-1]:
 		$Sprite.frame = sprite[0]
+
+# get area
+func get_area():
+	return Rect2(
+		Vector2(position.x - Constants.TANK_WIDTH_HALF, position.y - Constants.TANK_HEIGHT_HALF),
+		Vector2(Constants.TANK_WIDTH, Constants.TANK_HEIGHT)
+	)
 
