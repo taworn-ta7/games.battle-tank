@@ -13,8 +13,14 @@ const BLOCK_HEIGHT = 64
 # ขนาดรถถัง
 const TANK_WIDTH = 64
 const TANK_HEIGHT = 64
-const TANK_WIDTH_HALF = (64 / 2)
-const TANK_HEIGHT_HALF = (64 / 2)
+const TANK_WIDTH_HALF = (TANK_WIDTH / 2)
+const TANK_HEIGHT_HALF = (TANK_HEIGHT / 2)
+
+# ขนาดกระสุน
+const BULLET_WIDTH = 8
+const BULLET_HEIGHT = 8
+const BULLET_WIDTH_HALF = (BULLET_WIDTH / 2)
+const BULLET_HEIGHT_HALF = (BULLET_HEIGHT / 2)
 
 # ทิศทาง
 const DIRECTION_LEFT = 0

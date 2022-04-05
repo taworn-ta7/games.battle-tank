@@ -22,10 +22,7 @@ func _ready():
 func _process(delta):
 	# กด Space ยิง
 	if Input.is_action_pressed("ui_accept"):
-		print("shoot!")
-		var bullet = preload("res://bullet.tscn").instance()
-		get_parent().add_child(bullet)
-		pass
+		shoot()
 		
 	# Check input 4 directions.
 	if Input.is_action_pressed("ui_left"):
@@ -64,13 +61,13 @@ func _process(delta):
 	if velocity.x <= 0 && area.position.x <= Constants.AREA_LEFT:
 		velocity.x = 0
 		position.x = Constants.AREA_LEFT + Constants.TANK_WIDTH_HALF
-	if velocity.x >= 0 && area.end.x >= Constants.AREA_RIGHT:
+	elif velocity.x >= 0 && area.end.x >= Constants.AREA_RIGHT:
 		velocity.x = 0
 		position.x = Constants.AREA_RIGHT - Constants.TANK_WIDTH_HALF
 	if velocity.y <= 0 && area.position.y <= Constants.AREA_UP:
 		velocity.y = 0
 		position.y = Constants.AREA_UP + Constants.TANK_HEIGHT_HALF
-	if velocity.y >= 0 && area.end.y >= Constants.AREA_DOWN:
+	elif velocity.y >= 0 && area.end.y >= Constants.AREA_DOWN:
 		velocity.y = 0
 		position.y = Constants.AREA_DOWN - Constants.TANK_HEIGHT_HALF
 
@@ -87,7 +84,21 @@ func _on_Sprite_frame_changed():
 	if $Sprite.frame >= sprite[-1]:
 		$Sprite.frame = sprite[0]
 
-# get area
+# shoot
+func shoot():
+	var bullet = preload("res://bullet.tscn").instance()
+	get_parent().add_child(bullet)
+	
+	if direction == Constants.DIRECTION_LEFT:
+		bullet.init(direction, Vector2(position.x - Constants.TANK_WIDTH_HALF, position.y))
+	elif direction == Constants.DIRECTION_RIGHT:
+		bullet.init(direction, Vector2(position.x + Constants.TANK_WIDTH_HALF, position.y))
+	elif direction == Constants.DIRECTION_UP:
+		bullet.init(direction, Vector2(position.x, position.y - Constants.TANK_HEIGHT_HALF))
+	elif direction == Constants.DIRECTION_DOWN:
+		bullet.init(direction, Vector2(position.x, position.y + Constants.TANK_HEIGHT_HALF))
+
+# ขอพื้นที่
 func get_area():
 	return Rect2(
 		Vector2(position.x - Constants.TANK_WIDTH_HALF, position.y - Constants.TANK_HEIGHT_HALF),
