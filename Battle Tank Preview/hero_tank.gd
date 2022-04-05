@@ -9,6 +9,8 @@ var sprite_down = [base_image + 4, base_image + 6]
 
 # เคลื่อนไหว
 var move = false
+var jam = false
+var jam_direction
 
 # ทิศทาง
 var direction = Constants.DIRECTION_UP
@@ -40,24 +42,32 @@ func _process(delta):
 		
 	# กดปุ่มทิศทาง
 	if Input.is_action_pressed("ui_left"):
+		if (jam && jam_direction == Constants.DIRECTION_LEFT): return
+		jam = false
 		velocity.x = -1
 		velocity.y = 0
 		sprite = sprite_left
 		move = true
 		direction = Constants.DIRECTION_LEFT
 	elif Input.is_action_pressed("ui_right"):
+		if (jam && jam_direction == Constants.DIRECTION_RIGHT): return
+		jam = false
 		velocity.x = 1
 		velocity.y = 0
 		sprite = sprite_right
 		move = true
 		direction = Constants.DIRECTION_RIGHT
 	elif Input.is_action_pressed("ui_up"):
+		if (jam && jam_direction == Constants.DIRECTION_UP): return
+		jam = false
 		velocity.x = 0
 		velocity.y = -1
 		sprite = sprite_up
 		move = true
 		direction = Constants.DIRECTION_UP
 	elif Input.is_action_pressed("ui_down"):
+		if (jam && jam_direction == Constants.DIRECTION_DOWN): return
+		jam = false
 		velocity.x = 0
 		velocity.y = 1
 		sprite = sprite_down
@@ -123,4 +133,6 @@ func get_area():
 # เกิดการชน
 func _on_HeroTank_body_entered(_body):
 	print("Tank Hit!")
+	jam = true
+	jam_direction = direction
 

@@ -2012,7 +2012,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=402]
-extents = Vector2( 24, 24 )
+extents = Vector2( 32, 32 )
 
 [node name="EnemyTank" type="KinematicBody2D"]
 script = ExtResource( 2 )

@@ -22,13 +22,17 @@ var velocity = Vector2(0, 0)
 var rate_of_fire = 1
 var rof = 0
 
+# เลือด
+var hp = 1
+
 # เรียกเมื่อ สร้าง Scene
 func _ready():
 	pass
 
 # เรียกเรื่อยๆ ทุกเวลา delta ผ่านไป
 func _process(delta):
-	pass
+	if hp <= 0:
+		queue_free()
 
 # เรียกเมื่อ animation frame เปลี่ยน
 func _on_Sprite_frame_changed():
@@ -57,7 +61,7 @@ func get_area():
 	)
 
 # เรียกตอนเริ่ม เพื่อเช็ตค่าตัวแปร
-func init(base_image, dir, speed, block):
+func init(base_image, dir, speed, hp, block):
 	# เช็ตชุดรถถัง
 	self.base_image = base_image
 	self.sprite_left = [base_image + 2, base_image + 4]
@@ -78,6 +82,9 @@ func init(base_image, dir, speed, block):
 	
 	# เช็ตความเร็ว
 	self.speed = speed
+	
+	# เซ็ตเลือด
+	self.hp = hp
 	
 	# เช็ตค่าเริ่มต้น
 	var pixel = Constants.block_to_pixel(block)

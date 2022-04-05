@@ -50,4 +50,6 @@ func get_area():
 # เกิดการชน
 func _on_Area_body_entered(body):
 	print("Bullet Hit!")
+	body.hp = body.hp - 1
+	destroy()
 

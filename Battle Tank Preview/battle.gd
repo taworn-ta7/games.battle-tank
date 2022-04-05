@@ -10,6 +10,6 @@ func _process(delta):
 
 # เรียกตอนเริ่ม เพื่อเช็ตค่าตัวแปร
 func init():
-	$EnemyTank01.init(8, Constants.DIRECTION_DOWN, 1, Vector2(2, 0))
-	$EnemyTank02.init(233, Constants.DIRECTION_DOWN, 1, Vector2(4, 0))
+	$EnemyTank01.init(8, Constants.DIRECTION_DOWN, 1, 2, Vector2(2, 0))
+	$EnemyTank02.init(233, Constants.DIRECTION_DOWN, 1, 4, Vector2(4, 0))
 
