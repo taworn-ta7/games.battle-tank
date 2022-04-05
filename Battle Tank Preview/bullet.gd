@@ -34,7 +34,7 @@ func _process(delta):
 		destroy()
 
 	translate(velocity * speed)
-	
+
 # ลบ Scene นี้ออก
 func destroy():
 	get_parent().remove_child(self)
@@ -46,4 +46,8 @@ func get_area():
 		Vector2(position.x - Constants.BULLET_WIDTH_HALF, position.y - Constants.BULLET_HEIGHT_HALF),
 		Vector2(Constants.BULLET_WIDTH, Constants.BULLET_HEIGHT)
 	)
+
+# เกิดการชน
+func _on_Area_body_entered(body):
+	print("Bullet Hit!")
 

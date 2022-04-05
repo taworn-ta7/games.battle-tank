@@ -11,5 +11,11 @@ script = ExtResource( 3 )
 position = Vector2( 32, 32 )
 
 [node name="EnemyTank01" parent="." instance=ExtResource( 2 )]
+gravity_scale = 0.0
 
 [node name="EnemyTank02" parent="." instance=ExtResource( 2 )]
+gravity_scale = 0.0
+
+[connection signal="body_entered" from="HeroTank" to="HeroTank" method="_on_Tank_body_entered"]
+[connection signal="body_entered" from="EnemyTank01" to="EnemyTank01" method="_on_Tank_body_entered"]
+[connection signal="body_entered" from="EnemyTank02" to="EnemyTank02" method="_on_Tank_body_entered"]
