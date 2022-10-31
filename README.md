@@ -15,3 +15,4 @@ In Thai only
 * [บทความ 6 ศัตรู](./Battle%20Docs/06.md)
 * [บทความ 7 ยิง!!](./Battle%20Docs/07.md)
 * [บทความ 8 ฉากจบ](./Battle%20Docs/08.md)
+* [บทความ 9 เอาทุกอย่างมารวมกัน](./Battle%20Docs/09.md)

@@ -1,0 +1,100 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://BattleField.gd" type="Script" id=1]
+[ext_resource path="res://EnemyTank.tscn" type="PackedScene" id=2]
+[ext_resource path="res://HeroTank.tscn" type="PackedScene" id=3]
+[ext_resource path="res://map.tres" type="TileSet" id=4]
+
+[node name="Area3BattleField" type="Area2D"]
+scale = Vector2( 4, 4 )
+script = ExtResource( 1 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 8, 8 )
+format = 1
+tile_data = PoolIntArray( 393230, 1, 0, 393231, 1, 0, 393232, 1, 0, 393233, 1, 0, 458766, 1, 0, 458767, 1, 0, 458768, 1, 0, 458769, 1, 0, 524300, 1, 0, 524301, 1, 0, 524302, 1, 0, 524303, 1, 0, 524304, 1, 0, 524305, 1, 0, 524306, 1, 0, 524307, 1, 0, 589836, 1, 0, 589837, 1, 0, 589838, 1, 0, 589839, 1, 0, 589840, 1, 0, 589841, 1, 0, 589842, 1, 0, 589843, 1, 0, 655374, 1, 0, 655375, 1, 0, 655376, 1, 0, 655377, 1, 0, 720910, 1, 0, 720911, 1, 0, 720912, 1, 0, 720913, 1, 0 )
+
+[node name="HeroTank" parent="." instance=ExtResource( 3 )]
+face = 3
+initial_unit = Vector2( 8, 0 )
+
+[node name="EnemyTank0" parent="." instance=ExtResource( 2 )]
+tile = 75
+face = 2
+initial_unit = Vector2( 0, 8 )
+
+[node name="EnemyTank1" parent="." instance=ExtResource( 2 )]
+tile = 75
+face = 2
+initial_unit = Vector2( 1, 8 )
+
+[node name="EnemyTank2" parent="." instance=ExtResource( 2 )]
+tile = 175
+face = 2
+initial_unit = Vector2( 2, 8 )
+
+[node name="EnemyTank3" parent="." instance=ExtResource( 2 )]
+tile = 175
+face = 2
+initial_unit = Vector2( 3, 8 )
+
+[node name="EnemyTank4" parent="." instance=ExtResource( 2 )]
+tile = 275
+face = 2
+initial_unit = Vector2( 4, 8 )
+
+[node name="EnemyTank5" parent="." instance=ExtResource( 2 )]
+tile = 275
+face = 2
+initial_unit = Vector2( 5, 8 )
+
+[node name="EnemyTank6" parent="." instance=ExtResource( 2 )]
+tile = 375
+face = 2
+initial_unit = Vector2( 6, 8 )
+
+[node name="EnemyTank7" parent="." instance=ExtResource( 2 )]
+tile = 375
+face = 2
+initial_unit = Vector2( 7, 8 )
+
+[node name="EnemyTank8" parent="." instance=ExtResource( 2 )]
+tile = 83
+face = 2
+initial_unit = Vector2( 8, 8 )
+
+[node name="EnemyTank9" parent="." instance=ExtResource( 2 )]
+tile = 83
+face = 2
+initial_unit = Vector2( 9, 8 )
+
+[node name="EnemyTank10" parent="." instance=ExtResource( 2 )]
+tile = 183
+face = 2
+initial_unit = Vector2( 10, 8 )
+
+[node name="EnemyTank11" parent="." instance=ExtResource( 2 )]
+tile = 183
+face = 2
+initial_unit = Vector2( 11, 8 )
+
+[node name="EnemyTank12" parent="." instance=ExtResource( 2 )]
+tile = 283
+face = 2
+initial_unit = Vector2( 12, 8 )
+
+[node name="EnemyTank13" parent="." instance=ExtResource( 2 )]
+tile = 283
+face = 2
+initial_unit = Vector2( 13, 8 )
+
+[node name="EnemyTank14" parent="." instance=ExtResource( 2 )]
+tile = 383
+face = 2
+initial_unit = Vector2( 14, 8 )
+
+[node name="EnemyTank15" parent="." instance=ExtResource( 2 )]
+tile = 383
+face = 2
+initial_unit = Vector2( 15, 8 )
