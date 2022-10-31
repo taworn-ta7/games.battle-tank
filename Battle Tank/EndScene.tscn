@@ -1,0 +1,36 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://fonts/Roboto-Black.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 64
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = SubResource( 1 )
+
+[node name="EndScene" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="DisplayLabel" type="Label" parent="."]
+margin_top = 120.0
+margin_right = 1024.0
+margin_bottom = 220.0
+custom_colors/font_color = Color( 1, 1, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "The End"
+align = 1
+valign = 1
+
+[node name="ThankLabel" type="Label" parent="."]
+margin_left = 200.0
+margin_top = 360.0
+margin_right = 824.0
+margin_bottom = 440.0
+text = "Thank you for playing.
+This game demonstrate how to use Godot Engine.
+https://godotengine.org/
+"
+align = 1
+valign = 1
