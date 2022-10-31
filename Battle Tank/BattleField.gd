@@ -1,14 +1,13 @@
 extends Area2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+# เก็บค่า parent ไว้ เพื่อการ access บ่อยๆ
+var parent
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	parent = get_parent()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -89,6 +88,37 @@ func hit_test(pos: Vector2, dir: int, fac: int) -> bool:
 		boom(pos, Globals.SoundType.BLOCK)
 		return true
 
+	# ทดสอบรถถัง ที่ไม่ใช่ฝ่ายเดียวกัน
+	var rect = Rect2(pos.x - Globals.AMMO_WIDTH_HALF, pos.y - Globals.AMMO_HEIGHT_HALF, Globals.AMMO_WIDTH, Globals.AMMO_HEIGHT)
+	if fac == Globals.FactionType.ENEMY:
+		# กระสุนฝ่ายศัตรู
+		var tank = $HeroTank
+		if tank != null && hit_tank(tank, rect):
+			# ยิงโดน
+			boom(pos, Globals.SoundType.BLOCK)
+			if tank.get_hit():
+				# พระเอกตาย T_T
+				boom2(pos)
+				parent.loss()
+			return true
+	elif fac == Globals.FactionType.HERO:
+		# กระสุนพระเอก
+		var count = get_child_count()
+		var i = 0
+		while i < count:
+			var tank = get_child(i) as EnemyTank
+			if tank != null && hit_tank(tank, rect):
+				# ยิงโดน
+				boom(pos, Globals.SoundType.BLOCK)
+				if tank.get_hit():
+					# ศัตรูตาย
+					boom2(pos)
+					# ศัตรูตายหมดแล้วหรือไม่?
+					if check_winning():
+						parent.win()
+				return true
+			i += 1
+
 	return false
 
 
@@ -103,10 +133,36 @@ func hit_obstacle(unit: Vector2) -> bool:
 	return false
 
 
+# ตรวจสอบว่า กระสุนโดนรถถัง
+func hit_tank(tank: Tank, rect: Rect2) -> bool:
+	var a = tank.get_area()
+	return a.intersects(rect)
+
+
+# ตรวจสอบว่า พระเอกชนะหรือยัง?
+func check_winning() -> bool:
+	var count = get_child_count()
+	var i = 0
+	while i < count:
+		var tank = get_child(i) as EnemyTank
+		if tank != null:
+			return false
+		i += 1
+	return true
+
+
 # แสดง effect ระเบิด
 func boom(pos: Vector2, fx: int) -> void:
 	var sfx = preload("res://FxBoom.tscn").instance()
 	add_child(sfx)
 	sfx.init(pos, fx)
 	#print("boom at %s" % pos)
+
+
+# แสดง effect ระเบิดใหญ่
+func boom2(pos: Vector2) -> void:
+	var sfx = preload("res://FxBoom2.tscn").instance()
+	add_child(sfx)
+	sfx.init(pos)
+	#print("boom2 at %s" % pos)
 
