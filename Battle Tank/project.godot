@@ -14,6 +14,10 @@ config/name="Battle Tank"
 run/main_scene="res://TitleScene.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Globals="*res://globals.gd"
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true

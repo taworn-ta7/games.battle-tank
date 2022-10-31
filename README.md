@@ -7,3 +7,4 @@ A Battle City clone game, with some learning modifications.
 In Thai only
 
 * [บทความ 0 บทเริ่ม](./Battle%20Docs/00.md)
+* [บทความ 1 ฉากต่อสู้](./Battle%20Docs/01.md)
