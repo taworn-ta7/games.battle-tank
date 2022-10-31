@@ -243,5 +243,6 @@ func fire() -> void:
 		elif direction == Globals.DirectionType.DOWN:
 			v = Vector2(0, 1)
 			p = Vector2(position.x + Globals.TANK_WIDTH_HALF, position.y + Globals.TANK_HEIGHT + 1)
-			#print("fire down at %s" % p)		bullet.init(direction, v, p, faction)
+			#print("fire down at %s" % p)
+		bullet.init(direction, v, p, faction)
 
