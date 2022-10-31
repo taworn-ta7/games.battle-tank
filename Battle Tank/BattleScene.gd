@@ -17,10 +17,10 @@ var time = 0
 
 # รายชื่อฉาก
 var area_list = [
-	"res://BattleField.tscn",
-	#"res://Area1BattleField.tscn",
-	#"res://Area2BattleField.tscn",
-	#"res://Area3BattleField.tscn",
+	#"res://BattleField.tscn",
+	"res://Area1BattleField.tscn",
+	"res://Area2BattleField.tscn",
+	"res://Area3BattleField.tscn",
 ]
 
 # ฉากปัจจุบัน
