@@ -1,0 +1,113 @@
+class_name EnemyTank
+extends "res://Tank.gd"
+
+
+# properties สำหรับค่าเริ่มต้น
+export(Globals.TankType) var tile = Globals.TankType.YELLOW_NORMAL_0
+export(Globals.DirectionType) var face = Globals.DirectionType.LEFT
+export(Vector2) var initial_unit = Vector2(0, 0)
+
+# AI
+enum AiMoveType {
+	THINKING,
+	PROCESSING,
+	WAITING,
+	CHECKING,
+}
+var ai_move_on = AiMoveType.THINKING
+var ai_move_dir = Globals.DirectionType.NONE
+var ai_move_target = null
+var ai_move_pos = null
+var ai_move_time = 0
+var ai_fire_time = 0
+
+# ตัวสุ่ม
+var rng = RandomNumberGenerator.new()
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	faction = Globals.FactionType.ENEMY
+	init(tile)
+	set_face(face)
+	position = Vector2(initial_unit.x * Globals.TANK_WIDTH, initial_unit.y * Globals.TANK_HEIGHT)
+	rng.randomize()
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	# เช็ค playing
+	if !top.playing():
+		return
+
+	ai_move_time += delta
+	ai_fire_time -= delta
+
+	if ai_fire_time <= 0 && last_fire_time <= 0:
+		# สุ่มค่า 0..9
+		var r = rng.randi() % 10
+		# ถ้าค่ามากกว่า n ยิง ไม่งั้นสุ่มใหม่ในอีก 1 วินาที
+		if r > 6:
+			fire()
+		else:
+			ai_fire_time = 1
+
+	if moving:
+		return
+
+	if ai_move_on == AiMoveType.THINKING:
+		# สุ่มทิศทาง
+		ai_move_dir = rng.randi() % 4
+		
+		# สุ่มระยะทาง เช็คให้ไม่เกินขอบกำแพง และสุ่มประมาณ 4-8 unit
+		var distance = rng.randi() % 4 + 4
+		var pos = position
+		if ai_move_dir == Globals.DirectionType.LEFT:
+			ai_move_target = Vector2(pos.x - distance * Globals.TANK_WIDTH, pos.y)
+			if ai_move_target.x < Globals.AREA_LEFT:
+				ai_move_target.x = Globals.AREA_LEFT
+		elif ai_move_dir == Globals.DirectionType.RIGHT:
+			ai_move_target = Vector2(pos.x + distance * Globals.TANK_WIDTH, pos.y)
+			if ai_move_target.x >= Globals.AREA_RIGHT:
+				ai_move_target.x = Globals.AREA_RIGHT
+		elif ai_move_dir == Globals.DirectionType.UP:
+			ai_move_target = Vector2(pos.x, pos.y - distance * Globals.TANK_HEIGHT)
+			if ai_move_target.y < Globals.AREA_UP:
+				ai_move_target.y = Globals.AREA_UP
+		elif ai_move_dir == Globals.DirectionType.DOWN:
+			ai_move_target = Vector2(pos.x, pos.y + distance * Globals.TANK_HEIGHT)
+			if ai_move_target.y >= Globals.AREA_DOWN:
+				ai_move_target.y = Globals.AREA_DOWN
+
+		#print("AI will move to %s, currently %s" % [ai_move_target, position])
+		ai_move_on = AiMoveType.PROCESSING
+	
+	elif ai_move_on == AiMoveType.PROCESSING:
+		# เดิน
+		#print("AI moving %s, time %s" % [ai_move_dir, ai_move_time])
+		controller(ai_move_dir)
+		ai_move_pos = position
+		ai_move_time = 0
+		ai_move_on = AiMoveType.WAITING
+
+	elif ai_move_on == AiMoveType.WAITING:
+		# รอซักครู่
+		ai_move_time += delta
+		ai_move_on = AiMoveType.CHECKING
+
+	elif ai_move_on == AiMoveType.CHECKING:
+		if position == ai_move_target:
+			# จบ AI รอบนี้
+			#print("AI end, restart")
+			ai_move_on = AiMoveType.THINKING
+		elif position == ai_move_pos && ai_move_time > 0.3:
+			# ถ้ายังขยับไม่ได้ ติดสิ่งกีดขวาง กลับไปคิดใหม่
+			#print("AI interrupt, restart, too")
+			ai_move_on = AiMoveType.THINKING
+		else:
+			# มาถึงตรงนี้ คือได้เดินตามที่ต้องการแล้ว แต่ยังไปไม่ถึงจุดหมาย เดินต่อไป
+			#print("AI still moving, position %s" % position)
+			controller(ai_move_dir)
+			ai_move_on = AiMoveType.WAITING
+			ai_move_pos = position
+

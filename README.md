@@ -12,3 +12,4 @@ In Thai only
 * [บทความ 3 สร้างรถถัง (ต่อ)](./Battle%20Docs/03.md)
 * [บทความ 4 สิ่งกีดขวาง](./Battle%20Docs/04.md)
 * [บทความ 5 ยิง!](./Battle%20Docs/05.md)
+* [บทความ 6 ศัตรู](./Battle%20Docs/06.md)
